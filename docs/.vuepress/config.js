@@ -1,5 +1,5 @@
 module.exports = {
-  title: '长城前端文档',
+  title: '广告牛前端文档',
   themeConfig: {
     displayAllHeaders: true,
     sidebar: [
