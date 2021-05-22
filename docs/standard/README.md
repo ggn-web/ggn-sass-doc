@@ -102,23 +102,197 @@ padding: 0 1em 2em;
 }
 ```
 
-9. 避免使用ID选择器及全局标签选择器防止污染全局样式,尽可能使用class
-10.  <font color=red>避免嵌套层级过多，最多三层嵌套</font>
+9. 避免使用 ID 选择器及全局标签选择器防止污染全局样式,尽可能使用 class
+10. <font color=red>避免嵌套层级过多，最多三层嵌套</font>
 
 :::
 
-## Javascript规范
+## Javascript 规范
 
 ::: tip 注意点
+
 1. 方法名、参数名、成员变量、局部变量都统一使用小写驼峰命名
 2. method 方法命名必须是 动词 或者 动词+名词 形式
-3. 增删查改，详情 ———命名可以参照下面的5 个单词
-``` js
+3. 增删查改，详情 ———命名可以参照下面的 5 个单词
+
+```js
 add / update / delete / detail / get
 ```
-4. 尽量使用ES6,ES7语法，不要用var这些
+
+4. 尽量使用 ES6,ES7 语法，不要用 var 这些
 5. 条件判断和循环最多三层
-6. console.log，debugger等调试使用的代码用完一定要删除
+6. console.log，debugger 等调试使用的代码用完一定要删除
+   :::
+
+## Vue 项目规范
+
+### 组件规范
+
+::: tip 注意点
+
+1. 组件名为多个单词，组件名应该始终是多个单词组成（大于等于 2），如 TodoItem.vue
+2. 基础组件文件名为 common 开头，使用完整单词而不是缩写，如 CommonTable.vue
+3. 和父模块/目录下紧密耦合的子组件，应该以父名作为前缀命名
+   > 这个尽量实现，因为考虑名字三级的缘故，有时候不太好实现可以适当调整
+
+```js
+components/todo/
+|- TodoList.vue
+|- TodoListItem.vue
+|- TodoItemButton.vue
+```
+
+4. 组件的 data 必须是一个函数
+
+```js
+export default {
+  data() {
+    return {
+      name: "jack",
+    };
+  },
+};
+```
+
+5. <font color=red>Prop 定义应该尽量详细</font>
+
+- 必须使用 camelCase 驼峰命名
+- 必须指定类型
+- 必须加上注释，表明其含义
+- 必须加上 required 或者 default，两者二选其一
+- 如果有业务需要，必须加上 validator 验证
+- 属性可以分离就分离，不要一直就用一个 Object 处理，这样不太好控制属性类型和默认值
+- 当然一个组件属性也不要过分多，这个需要自己把控，哪些用 Object，哪些不用，属性个数控制在 9 个以内
+
+```js
+props: {
+  // 组件状态，用于控制组件的颜色
+   status: {
+     type: String, // 这个必须
+     required: true,
+     validator: function (value) {
+       return [
+         'succ',
+         'info',
+         'error'
+       ].indexOf(value) !== -1
+     }
+   },
+    // 用户级别，用于显示皇冠个数
+   userLevel：{
+      type: String,
+      required: true
+   },
+   count: {
+       type: Number,
+       default: 0
+   },
+   message: {
+       type: Object,
+       default: ()=>({name:'ggn'})
+   }
+}
+```
+
+6. 为组件样式设置作用域（如果需要深层样式使用 >>> 和 ::v-deep）
+
+```js
+<template>
+  <button class="btn btn-close">X</button>
+</template>
+
+<!--深层样式,css使用 >>>，scss使用 ::v-deep -->
+<!-- 使用 `scoped` 特性 -->
+<style scoped>
+  .btn-close {
+    background-color: red;
+  }
+</style>
+```
+
+7. 模板中使用简单的表达式（逻辑的运算使用计算属性或者过滤器 filter）
+
+```js
+<template>
+  <p>{{ normalizedFullName }}</p>
+</template>
+
+// 复杂表达式已经移入一个计算属性
+computed: {
+  normalizedFullName: function () {
+    return this.fullName.split(' ').map(function (word) {
+      return word[0].toUpperCase() + word.slice(1)
+    }).join(' ')
+  }
+}
+```
+
+8. 指令都使用缩写形式,用 : 表示 v-bind: 、用 @ 表示 v-on: 和用 # 表示 v-slot:
+9. 标签顺序保持一致
+
+```js
+<template>...</template>
+<script>...</script>
+<style>...</style>
+```
+
+10. 必须为 v-for 设置键值 key,key 值有唯一值的使用唯一值，不要用 index，<font color=red>特别是增删改的结构，不准用 index 作为 key</font>，如果仅仅是展示列表，又没有唯一值可以用 index 替代
+
+11. v-show 与 v-if 选择
+
+    > 如果运行时，需要非常频繁地切换，使用 v-show ；如果在运行时，条件很少改变，使用 v-if
+
+12. script 标签内部结构顺序
+
+    > components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） >
+
+13. <font color=red>不要手动操作 DOM,实在要操作可以先考虑 ref 能不能实现需求</font>
+
 :::
 
-## Vue项目规范
+### 注释规范
+
+::: tip Vue 文件
+
+1. 头部注释，对该文件进行说明，组件/页面
+
+- 通用功能性组件介绍该组件的功能，比如：通用的 table 配合分页
+- 业务组件，介绍该组件 哪个模块/哪个页面/区域组件简述
+- 页面，介绍该页面是 哪个模块/哪个页面
+
+2. methods 函数注释，使用/\*\*/，包括日期，描述，参数，返回值，编辑者信息
+
+##### <font color=red>上面的头部注释和函数注释会使用 vscode 插件 [koroFileHeader](/tool/#korofileheader-的配置)，规定模板统一快捷键注释</font>
+
+3. data 函数里面的变量和 computed 计算属性
+
+   > 每个变量都要注释，用 // 注释内容 这种简单的模式就好
+
+4. import 引入，不管是项目内组件，本地图片，还是第三方插件等都要做简单介绍
+5. template 内部注释，分区块进行注释，用<!--注释内容-->的模式，至于区块内部自己斟酌
+
+```js
+<template>
+   <!--头部导航-->
+   <div></div>
+   <!--中间内容区-->
+   <div class="user-info"></div>
+   <!--底部链接-->
+   <div class="footer"></div>
+</template>
+```
+
+:::
+
+::: tip Js 文件 | Css/Scss 文件/Vue 文件里面的 style 区域
+
+1.  Js 文件
+
+- 里面的函数使用上面所说的函数注释
+- 变量就用简单的 // 注释内容 即可
+- import引入 要在后面用 // 注释内容 进行简单的阐述
+- 过滤器和指令就用上面函数注释方式，有参数介绍参数
+- 接口 api 的话，直接 // 注释内容 即可， （因为每个模块都是特定的 js，所以不用加模块说明）模板是：页面/接口功能介绍
+
+2.  Css/Scss 文件/vue 文件里面的 style 区域 只要分区块进行简单的注释即可
+:::
