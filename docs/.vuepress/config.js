@@ -5,6 +5,7 @@ module.exports = {
     sidebar: [
       '/',
       '/env/',
+      '/standard/',
       // "/dir/",
       {
         title: '自定义组件库',
