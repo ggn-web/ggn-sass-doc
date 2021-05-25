@@ -6,7 +6,7 @@ module.exports = {
       '/',
       '/env/',
       '/standard/',
-      // "/dir/",
+      "/dir/",
       {
         title: '自定义组件库',
         // path: '/library/',

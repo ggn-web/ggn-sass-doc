@@ -1,57 +1,117 @@
 # 项目说明
 
-## 一级目录结构  
+## 一级目录
 
-| 目录路径        | 说明           | 层级  |
-| ------------- |:-------------:| -----:|
-| vue.config.js      | vue的配置文件 | 1 |
-| deploy.js      | 项目的打包js | 1 |
-| package.json | 包信息文件(依赖包和指令scripts) | 1 |
-| babel.config.js | babel的配置文件 | 1 |
-| .gitignore | git提交的忽略文件配置 | 1 |
-| .eslintrc.js | eslint的配置文件 | 1 |
-| .browserslistrc | 浏览器的兼容配置文件 | 1 |
-| public | 纯粹静态文件夹目录，此目录不走webpack资源分析 | 1 |
-| dist | 打包文件夹,里面是打包后的文件 | 1 |
-| node_modules | 依赖的文件，一般安装依赖后就会有 | 1 |
-| src | 业务开发文件目录 | 1 |  
+| 目录路径        |                      说明                       | 层级 |
+| --------------- | :---------------------------------------------: | ---: |
+| vue.config.js   |                 vue 的配置文件                  |    1 |
+| package.json    |        包信息文件(依赖包和指令 scripts)         |    1 |
+| babel.config.js |                babel 的配置文件                 |    1 |
+| .gitignore      |             git 提交的忽略文件配置              |    1 |
+| .eslintignore   |                eslint 忽略的配置                |    1 |
+| .eslintrc.js    |                eslint 的配置文件                |    1 |
+| public          | 纯粹静态文件夹目录，此目录不走 webpack 资源分析 |    1 |
+| dist            |          打包文件夹,里面是打包后的文件          |    1 |
+| node_modules    |        依赖的文件，一般安装依赖后就会有         |    1 |
+| src             |                业务开发文件目录                 |    1 |
 
+## 二级目录
 
-## 二三级目录结构
-| 目录路径        | 说明           | 层级&nbsp; &nbsp;  |
-| ------------- |:-------------:| -----:|
-| src/api | 接口api目录 | 2 |
-| src/api/module | 接口api分不同的模块，比如login登录，chart图表，模块目录 | 3 |
-| src/assets | 静态资源目录(图片+scss/css)，这里面的会走webpack资源分析 | 2 |
-| src/assets/images | 图片目录 | 3 |
-| src/assets/scss | 样式目录，此项目用的市sass预处理器 | 3 |
-| src/components | 组件目录(全局通用组件目录+其他业务组件目录) | 2 |
-| src/components/common | 全局通用组件目录 | 3 |
-| src/router | 路由目录 | 2 |
-| src/vuex | vuex状态管理目录 | 2 |
-| src/utils | 通用工具目录(ajax+echarts+elementui...) | 2 |
-| src/utils/server | ajax的封装目录 | 3 |
-| src/views | 页面目录 | 2 |
-| src/views/chart | 页面嵌套目录，图表，文件夹名用于路由自动注入时嵌套路由的参考 | 3 |  
+| 目录路径                  |                                          说明                                           | 层级&nbsp; &nbsp; |
+| ------------------------- | :-------------------------------------------------------------------------------------: | ----------------: |
+| src/api                   |                               原 jeecg 框架接口 api 目录                                |                 2 |
+| src/assets                |           原 jeecg 框架静态资源目录(图片+less)，这里面的会走 webpack 资源分析           |                 2 |
+| src/components            | 原 jeecg 框架组件目录，需要关注的是里面的 dict/JDictSelectTag.vue 和 layouts,目前用到过 |                 2 |
+| src/components/dict       |                  原 jeecg 框架字典的一些组件(JDictSelectTag 已经用到)                   |
+| src/components/layouts    |                       原 jeecg 框架路由中有 children 的父级的模板                       |
+| src/config                |                           原 jeecg 框架一些全局变量和路由常量                           |                 2 |
+| src/mixins                |                                     ajax 的封装目录                                     |                 2 |
+| src/router                |                                     路由定义的地方                                      |                 2 |
+| src/sass【重点】          |               sass 系统的目录(包括 assets，components，mock，scss，utils)               |                 2 |
+| src/store【重点】         |         vuex 状态管理目录(原 jeecg 框架里面有一些逻辑，后期状态机制也是在这里)          |                 2 |
+| src/utils                 |                               原 jeecg 框架通用工具/方法                                |                 2 |
+| src/views                 |                                  原 jeecg 框架页面目录                                  |                 2 |
+| src/views/sass【重点】    |                                   sass 系统的页面目录                                   |                 2 |
+| src/App.vue               |                                      项目的主页面                                       |                 2 |
+| src/main.js【重点】       |                      项目的主入口文件，包含了众多配置的引入和使用                       |                 2 |
+| src/permission.js【重点】 |                                项目的权限路由的控制文件                                 |                 2 |
 
+## sass 目录
 
-## 重要文件说明
+| 目录路径                          |                                                 说明                                                 |
+| --------------------------------- | :--------------------------------------------------------------------------------------------------: |
+| sass/api                          |              api 模块的自动注入，用的是 vue install 的插件形式，里面是具体项目模块的 js              |
+| sass/assets/font                  |                                           项目中用到的字体                                           |
+| sass/assets/images                |                             本地图片全放在这里，业务模块在里面自行建目录                             |
+| sass/components                   |                                   组件目录,具体业务模块自行建目录                                    |
+| sass/components/common            |                                             通用组件目录                                             |
+| sass/mock                         |                                            引入了 mockjs                                             |
+| sass/scss                         | scss 目录, reset.scss 是初始化样式，ele.scss 是覆盖 elementui 主题的文件，common.scss 是通用全局样式 |
+| sass/utils                        |                                             通用工具目录                                             |
+| sass/utils/common.js              |                                             通用方法封装                                             |
+| sass/utils/filter.js              |                                              全局过滤器                                              |
+| sass/utils/reg.js                 |                                            正则的判断封装                                            |
+| sass/utils/multiRequireContext.js |                              自动注入的文件【可以不看，业务开发不涉及】                              |
+| sass/utils/elementui.js           |                                           elementui 的引入                                           |
 
-| 目录路径        | 说明           |
-| ------------- |:-------------:| -----:|
-| src/api/index.js | api模块的自动注入，用的是vue install的插件形式 |
-| src/components/index.js | 针对src/components/common文件夹，vue全局通用组件的自动注入，同样是是vue install的插件形式 |
-| src/router/routeOperator.js | 需要在路由里进行的操作的方法的解耦，比如路由导航beforeEach |
-| src/store/index.js | vuex状态管理的入口文件 |
-| src/utils/server/index.js | ajax封装成型后的导出文件,用于在src/api/index.js里面使用 |
-| src/utils/server/ajax.js | axios的原始配置文件 |
-| src/utils/theme.js | echarts的主题色配置文件 |
-| src/utils/common.js | 通用方法文件 |
-| src/utils/elementui.js | elementui第三方UI库的按需引入配置文件 |
-| src/App.vue | 项目的主页面 |
-| src/main.js | 项目的主入口文件，包含了众多配置的引入和使用|  
+#### <font color=red>说明：后面会对项目进行瘦身，原 jeecg 的很多文件要删掉，不过整体目录结构基本不变，不会影响业务开发</font>
 
-## 功能说明
+## 功能点
+
+1. 别名 alias, 用于路径的 import 引入，比如 import xxx from "@sass/utils/filter"
+
+```js
+config.resolve.alias
+  .set('@$', resolve('src'))
+  .set('@api', resolve('src/api'))
+  .set('@assets', resolve('src/assets'))
+  .set('@comp', resolve('src/components'))
+  .set('@views', resolve('src/views'))
+  .set('@sass', resolve('src/sass'))
+  .set('@com', resolve('src/sass/components'));
+```
+
+1. @com/common 里面的通用组件的用法
+
+```js
+// 比如 CommonTable.vue
+使用： <sass-common-table></sass-common-table>
+```
+
+2. api 自动注入
+   > @sass/api/\* 已经对接口进行了自动注入，绑定到 <font color=red>Vue.prototype.\$sa</font> 上  
+   > 使用方法如下：
+
+```js
+this.$sa.文件名.方法名().then(()=>{...});
+
+// 实例
+// this.$sa.pm.getList其实就是导出方法的引用
+getData() {
+  let { page, size } = this.pageInfo
+  this.pageInfo.loading = true
+  this.$sa.pm
+    .getList({
+      pageNo: page,
+      pageSize: size,
+      condition: this.searchCont,
+      projectPhase: setAllCode(this.projectPhase),
+      industryCode: setAllCode(this.industryCode),
+      projectType: this.formVal.orderType,
+      payStatus: this.formVal.payStatus,
+    })
+    .then((res) => {
+      console.log(res, 'res')
+      this.pageInfo.loading = false
+      this.pageInfo.total = res.result.total
+      this.tableData = res.result.records
+    })
+},
+```
+
+#### 原理就是：api/\*.js 里面每个 js 文件 export 导出的方法，整体绑定一个{}的 key 上，key 的名字就是文件名，然后将这个{}赋值给 Vue.prototype.\$sa
+
+<!-- ## 功能说明
 <br />
 
 - 路由自动注入
@@ -68,12 +128,12 @@
 </template>
 ```
 
-> 只要添加.vue文件后就会自动创建路由，比如<font color=blue>**chart/dataManage.vue**</font>,生成后路由path就是<font color=blue>**/chart/datamanage**</font>,name就是<font color=blue>**chart-datamanage**</font>   
+> 只要添加.vue文件后就会自动创建路由，比如<font color=blue>**chart/dataManage.vue**</font>,生成后路由path就是<font color=blue>**/chart/datamanage**</font>,name就是<font color=blue>**chart-datamanage**</font>
 
 <br />
 
 - api的接口化和防止重复提交
-> src/utils/server/index.js已经对接口的重复提交做了处理，同一个接口地址，是不能重复提交的，如果需要重复提交，可以在调用时候增加<font color=green>**multi**</font>参数  
+> src/utils/server/index.js已经对接口的重复提交做了处理，同一个接口地址，是不能重复提交的，如果需要重复提交，可以在调用时候增加<font color=green>**multi**</font>参数
 > 调用示例如下：
 ``` js
 this.$server.chart.tbTypeData(
@@ -93,12 +153,7 @@ this.$server.chart.tbTypeData(
       );
 ```
 > 相关说明：
->  - axios封装后的实例赋值给了<font color=green>**Vue.prototype.$server**</font>，所以可以直接用<font color=green>**this.$server**</font>进行引用  
->  - 接口的调用格式：<font color=green>**this.$server.(api/module/*.js的文件的名字).(export default导出的json的key)(successFn,config)**</font>  
+>  - axios封装后的实例赋值给了<font color=green>**Vue.prototype.$server**</font>，所以可以直接用<font color=green>**this.$server**</font>进行引用
+>  - 接口的调用格式：<font color=green>**this.$server.(api/module/*.js的文件的名字).(export default导出的json的key)(successFn,config)**</font>
 >  - api/module/*.js的文件就是各个模块的接口api的js文件，export default导出的json的key(自己定义，但是要看得懂，有意义)，key后面的值就是接口的地址
->  - 参数说明：successFn是成功的回调函数,传入接口的数据res，config是配置的参数，针对的有<font color=green>**type,data,multi,headers**</font>四个常用配置
-
-
-
-
-
+>  - 参数说明：successFn是成功的回调函数,传入接口的数据res，config是配置的参数，针对的有<font color=green>**type,data,multi,headers**</font>四个常用配置 -->

@@ -148,7 +148,7 @@ components/todo/
 export default {
   data() {
     return {
-      name: "jack",
+      name: 'jack',
     };
   },
 };
@@ -290,9 +290,102 @@ computed: {
 
 - 里面的函数使用上面所说的函数注释
 - 变量就用简单的 // 注释内容 即可
-- import引入 要在后面用 // 注释内容 进行简单的阐述
+- import 引入 要在后面用 // 注释内容 进行简单的阐述
 - 过滤器和指令就用上面函数注释方式，有参数介绍参数
 - 接口 api 的话，直接 // 注释内容 即可， （因为每个模块都是特定的 js，所以不用加模块说明）模板是：页面/接口功能介绍
 
 2.  Css/Scss 文件/vue 文件里面的 style 区域 只要分区块进行简单的注释即可
 :::
+
+### Vue 项目目录规范
+
+:::tip 页面 views/sass/**
+
+1. 页面目录要遵循产品的结构,目录都是小写，复数用-隔开，具体页面还是大写驼峰的格式
+
+``` js
+// 项目管理/项目询价列表/新增编辑页面，详情页面,列表页面
+
+views/sass/pm/pm-enquiry
+|-add-edit
+  |-Index.vue
+|-detail
+  |-Index.vue
+|-list
+  |-Index.vue
+```
+2. <font color=red>页面使用 （文件夹/Index.vue） 的模式，webpack会自动找到</font>
+``` js
+// /views/sass是项目的页面的根目录
+
+页面路径：views/sass/pm/pm-enquiry/add-edit/Index.vue
+
+路由的组件路径用 /pm/pm-enquiry/add-edit 就能找到，不用再加 /Index
+```
+:::
+
+:::tip 页面 sass/components/**
+
+1. 业务组件路径要参照上面的页面路径，实现统一
+
+``` js
+// 项目管理/项目询价列表/新增编辑页面，详情页面,列表页面
+
+// /sass/components是项目的组件的根目录
+
+sass/components/pm/pm-enquiry
+|-add-edit
+  |-xxx.vue
+  |-xxxx.vue
+|-detail
+  |-xxx.vue
+  |-xxxx.vue
+|-list
+  |-xxx.vue
+  |-xxxx.vue
+  |-xxxxx.vue
+```
+2. <font color=red>/sass/components/common里面都是通用全局组件，不用局部引入，可以直接使用</font>
+> 这里面一般都是通用的，比如Table，级联， Tabs，Upload，Dialog，Input等。  
+> 为何会有这么多通用组件，第三方ElementUI不是有么？
+>> 公司UI和第三方组件UI还是有区别的，颜色，字体大小，背景色等，第三方可以提供功能给与我们便利，我们可以将功能进行组合，样式进行调整，封装成适合公司需要的通用组件
+
+:::
+
+## Vue Router 规范
+
+:::tip 路由
+
+1. 编程式导航（遵循下面三种方式）
+
+```js
+// 命名的路由 -> /user/123
+router.push({ name: 'user', params: { userId: '123' } });
+
+// 带查询参数，变成 /register?plan=private
+router.push({ path: 'register', query: { plan: 'private' } });
+
+router.push({ path: `/user/${userId}` }); // -> /user/123
+```
+
+2. router 中的 path,name 命名规范
+
+- path 所有字母小写，复数用-进行隔开，必须以 / 开头，即使是children里的path也要以 / 开头
+- path 的路径要遵循前端页面在项目中的位置进行定义，方便找到
+
+```js
+ // 比如项目管理询价模块
+ // 列表 页面路径 views/pm/pm-enquiry/list/Index.vue
+ {
+   path: "/pm/pm-enquiry/list",
+   name: "pm_pm-enquiry_list",
+ }
+ //  详情 页面路径 views/pm/pm-enquiry/detail/Index.vue
+ {
+   path: "/pm/pm-enquiry/detail",
+   name: "pm_pm-enquiry_detail",
+ }
+```
+
+- name 的命名要根据 path 进行定义，用\_下划线隔开
+  :::
