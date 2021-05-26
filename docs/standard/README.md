@@ -352,6 +352,32 @@ sass/components/pm/pm-enquiry
 
 :::
 
+### 接口api规范
+
+::: tip <font color=red>接口api所在目录： @sass/api/**</font>
+
+1. 里面每个js文件就是一个模块，比如项目管理叫pm.js
+
+2. 每个js文件里面用注释进行分割下面的模块，比如项目管理下的项目提案，项目询价
+
+3. 每个js文件里面方法不能重名，所以命名推荐是包含此子模块的名字，比如提案proposal
+
+```js
+// pm.js
+// 左边十个-,右边十个-,中间两个-
+
+/*----------项目提案--start----------*/
+export const getProposalList = (data) => postAction('/saas/project/proposalList', data)
+xxxxxxxxx
+/*----------项目列表--end----------*/
+
+/*----------项目询价--start----------*/
+xxxxxxxxx
+/*----------项目询价--end----------*/
+```
+
+:::
+
 ## Vue Router 规范
 
 :::tip 路由
@@ -388,4 +414,17 @@ router.push({ path: `/user/${userId}` }); // -> /user/123
 ```
 
 - name 的命名要根据 path 进行定义，用\_下划线隔开
+
+3. 菜单管理的排序
+
+- 目前项目管理默认是0，后面的模块都依次0.1x（项目列表）, 0.2x（项目提案列表）, 0.3x（项目询价列表）
+- 项目列表模块里面区分页面，比如列表，新增/编辑，详情就是 0.11，0.12，0.13
+
+![项目排序](../images/pm/sort.jpg)
+
+![项目排序](../images/pm/sort-1.jpg)
+
+
+
+
   :::
