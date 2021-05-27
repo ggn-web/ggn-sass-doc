@@ -244,7 +244,7 @@ computed: {
 
 12. script 标签内部结构顺序
 
-    > components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） >
+    > components > props > data > computed > watch > filter > 钩子函数（钩子函数按其执行顺序） > methods
 
 13. <font color=red>不要手动操作 DOM,实在要操作可以先考虑 ref 能不能实现需求</font>
 
@@ -307,21 +307,11 @@ computed: {
 // 项目管理/项目询价列表/新增编辑页面，详情页面,列表页面
 
 views/sass/pm/pm-enquiry
-|-add-edit
-  |-Index.vue
-|-detail
-  |-Index.vue
-|-list
-  |-Index.vue
+|-addEdit.vue
+|-Detail.vue
+|-List.vye
 ```
-2. <font color=red>页面使用 （文件夹/Index.vue） 的模式，webpack会自动找到</font>
-``` js
-// /views/sass是项目的页面的根目录
 
-页面路径：views/sass/pm/pm-enquiry/add-edit/Index.vue
-
-路由的组件路径用 /pm/pm-enquiry/add-edit 就能找到，不用再加 /Index
-```
 :::
 
 :::tip 页面 sass/components/**
@@ -424,7 +414,9 @@ router.push({ path: `/user/${userId}` }); // -> /user/123
 
 ![项目排序](../images/pm/sort-1.jpg)
 
-
-
-
   :::
+
+## 图片访问操作方式（Ali-OSS）
+
+- 如何进行url的控制，详细请访问 [阿里的图片处理操作方式](https://help.aliyun.com/document_detail/44686.html)
+- url后面的参数param_value具体类型，访问  [处理参数](https://help.aliyun.com/document_detail/183902.htm?spm=a2c4g.11186623.2.8.21374981H4TFLK#section-tx1-qtj-ar8)
